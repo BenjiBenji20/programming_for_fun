@@ -1,23 +1,27 @@
 from pathlib import Path
 import os
-from navigator import ROOT_DIR
 
 # Functions designed to always call files_in_dir, which then navigate to pass param path directory.
 # files_in_dir organizes the files in key, value pair {extension: filename}.
 # It was designed this way to handle real-time changes of files in the pass param path directory during code runtime.
 
 
+# start the navigation from root directory
+# and define according to os type
+# windows == nt, linux == /
+ROOT_DIR = Path("C:\\") if os.name == "nt" else Path("/")
+
 def files_in_dir(path: Path) -> dict:
     """Collects existing files in dir"""
     path = ROOT_DIR / path
-    files = os.listdir(str(path))
-    
+    files = [f for f in path.iterdir() if f.is_file()]
+
     res = {}
-    for f in files:
-        ext = os.path.splitext(f)[1] # hanldes extension
-        if ext not in res:
-            res[ext] = set()
-        res[ext].add(f)
+    for file in files:
+        file_extension = file.suffix.lower()
+        if file_extension not in res:
+            res[file_extension] = set() 
+        res[file_extension].add(file.name)
         
     return res
 
@@ -66,30 +70,38 @@ def check_file_in_dir(path: Path, rules: dict) -> bool:
     
     
 def org_file_in_dir(path: Path, rules: dict) -> dict:
-    """Organize the known files in dir that does not inside a sub folder"""
-    if not check_file_in_dir(path, rules): # check if known files exist
+    """Organize files in directory according to rules"""
+    organized = {}
+    path = ROOT_DIR / path
+    
+    if not path.exists():
         return {}
     
-    path = ROOT_DIR / path
-    files = os.listdir(str(path))
+    # Get all files in the directory not included the subdirectories
+    files = [f for f in path.iterdir() if f.is_file()]
     
-    res = {}
-    for f in files:
-        ext = os.path.splitext(f)[1] # hanldes extension
-        if ext in rules.keys():
-            folder_category = rules[ext]
-            # ensure folder category not already in res
-            if folder_category not in res:
-                res[folder_category] = set()
-            res[folder_category].add(f) # add file to correct folder category
-            
-    return res
-    
-    
-# avf = files_in_dir("Users\\imper\\Downloads\\test_folder")
-# print(avf)
-# #print(choose_file_ext_to_org(avf, ['.py', '.txt']))
-# rules = file_folder_pair_rules("Users\\imper\\Downloads\\test_folder", {".jpg": "images", ".txt": "notes", ".py": "gagi", ".png": "sugar"})
+    for file in files:
+        file_extension = file.suffix.lower()
 
-# print("Rules: ", rules)
-# print(org_file_in_dir("Users\\imper\\Downloads\\test_folder", rules))
+        # Check if this extension has a rule
+        for ext, folder in rules.items():
+            if file_extension == ext.lower():
+                if folder not in organized:
+                    organized[folder] = []
+                organized[folder].append(file.name)
+                break
+    
+    return organized
+    
+    
+def is_chain_cmd(cmd: str) -> bool:
+    import re
+    return re.search(r"\s", cmd) or cmd != cmd.strip()
+    
+avf = files_in_dir(r"Users\imper\Downloads\test_folder")
+print(avf)
+print("Files to organizd: ",choose_file_ext_to_org("Users\\imper\\Downloads\\test_folder", ['.py', '.txt']))
+rules = file_folder_pair_rules("Users\\imper\\Downloads\\test_folder", {".jpg": "images", ".txt": "notes", ".py": "gagi", ".png": "sugar"})
+
+print("Rules: ", rules)
+print(org_file_in_dir("Users\\imper\\Downloads\\test_folder", rules))
