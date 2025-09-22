@@ -13,13 +13,16 @@ A simple CLI tool to organize files in a directory by their extensions, moving t
 - `goin <path>`: Navigate to the specified directory (like `cd`).
 - `org`: Organize files in the current directory—prompts for custom folder names based on detected extensions.
 - `undo`: Revert the last organization (if applicable).
+- `redo`: To redo the undid organization of files (if applicable).
 - `exit`: Exit the application
 
 ## Usage
 1. Clone the repo and navigate to this folder.
 2. Run the CLI app (e.g., `python main.py` or equivalent, depending on the language).
-3. Use `go <path>` to navigate to a directory with unorganized files.
+3. Use `goin <path>` to navigate to a directory with unorganized files.
 4. Run `org` to detect files, input custom folder names for each extension, and sort accordingly.
 5. Run `undo` to revert if needed.
+6. Run `redo` to redo the undid commmand
+7. Run `exit` to exit the application
 
 *Note*: Focuses on real-time file detection and user-defined organization.
