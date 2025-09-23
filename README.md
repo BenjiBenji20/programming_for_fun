@@ -15,7 +15,9 @@ This repository is a collection of CLI-based projects, ranging from **beginner t
 
 Here’s a list of the CLI projects in this repository, ordered from beginner-friendly to more advanced:
 
-1. CLI-Based Task Manager – A simple to-do list app for adding, viewing, deleting, updating and completing tasks.
+- CLI-File Organizer - A helpful file organizer that lets you execute commands to organize files with safe undo and redo to revert changes.
+
+- CLI-Based Task Manager – A simple to-do list app for adding, viewing, deleting, updating and completing tasks.
 
 Feel free to explore each project's folder for the source code, instructions on how to run it, and notes on the concepts covered.
 
