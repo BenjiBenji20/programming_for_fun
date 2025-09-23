@@ -24,10 +24,6 @@ def make_dir(path: Path, folders: list) -> list:
     return changes
 
 
-"""
-    Pass here the file_folder_pair_rules during main execution. 
-    This needs a rules to organize files according to their folder name
-"""
 def move_file(path: Path, rules: dict) -> bool:
     """Moves files and tracks the actions for undo and redo"""
     # Convert to absolute path
@@ -195,30 +191,3 @@ def redo_move() -> bool:
         REDO.append(last_redo_operation) # put the operation back when failed
         return False
                 
-    
-# dir = "Users\\imper\\Downloads\\test_folder"
-# # print(make_dir(dir, ["images", "notess"]))
-# move_file(dir, {".jpg": "images", ".txt": "notes", ".py": "prog", ".png": "images"})
-# print("\nUndo stack after moving a files: ", UNDO)
-# print("Redo stack after moving a files: ", REDO)
-
-
-# import time
-# time.sleep(5)
-# undo_move()
-# print("\nUndo stack after moving a files: ", UNDO)
-# print("Redo stack after moving a files: ", REDO)
-
-
-# time.sleep(5)
-# redo_move()
-# print("\nUndo stack after moving a files: ", UNDO)
-# print("Redo stack after moving a files: ", REDO)
-
-
-# print("\n\nANOTHER OPERATION WITH PYTHON FILE")
-# move_file(dir, {".py": "prog2"})
-# time.sleep(5)
-# undo_move()
-# print("\nUndo stack after moving a files: ", UNDO)
-# print("Redo stack after moving a files: ", REDO)

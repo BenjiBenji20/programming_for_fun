@@ -5,6 +5,9 @@ CMD = {
     "org", # <- organize known files in a paramter
     "undo", # <- only if existing command has been done, it undo the previous file org
     'redo', # <- redo what has been undone
-    "exit" # <- exit the applicaiton 
+    "exit", # <- exit the applicaiton 
+    "list", # <- display all available files
+    "mkrules", # <- make file, folder pair rules
+    "list-rules" # <- display the current rules
 }
 

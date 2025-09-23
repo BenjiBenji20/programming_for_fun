@@ -18,19 +18,34 @@ class FileOrganizerApp:
         for values in available_files.values():
             for v in values:
                 print(v)
-        
-                
+
+
     def create_file_rules(self) -> dict:
+        """
+        Create a key value pair for the chosem files and the available files
+        ex:
+            available files:
+                ".txt": {"notes.txt", "todo.txt"},
+                ".jpg": {"cat.jpg"}
+            pair_rules passed param:
+                {".jpg": "images", ".txt": "notes", ".py": "programs", ".png": "sugar"}
+            directory name for each file extension [output]:
+                {
+                    ".jpg": "images", # <- .jpg stores in images folder
+                    ".txt": "notes" # <- .txt stores in notes folder,
+                    ... # .py and .png key, value were ignored since these files are not existing
+                }
+        """
         available_files = files_in_dir(self.path)
         if not available_files:
             print("No available files")
             return {}
         
         # Select file extensions available in directory
-        print("List of file extensions:")
+        print("List of available file extensions:")
         print(list(available_files.keys()))
         
-        print("Create file organization rules")
+        print("\nCreate file organization rules")
         print("(left file extension name, ex. .jpg, .txt,...) -> (right folder name). [case sensitive]")
         print("Type done if finish.")
         file_org_rules = {}
@@ -49,9 +64,19 @@ class FileOrganizerApp:
                 if k in available_files.keys():
                     file_org_rules[k.strip()] = v.strip()
         
-        print("Selected file rules: ")
+        print("\nSelected file rules: ")
         for k, v in file_org_rules.items():
             print(f"{k} : {v}")
             
         return file_org_rules
     
+
+    def display_rules(self, rules: dict):
+        print("File organization rules: [file extension:folder]")
+        ls = []
+        for k, v in rules.items():
+            ls.append(f"{k} : {v}")
+
+        print(ls)
+        
+        
