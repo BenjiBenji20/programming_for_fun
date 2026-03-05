@@ -5,7 +5,7 @@ from file_organizer.cmd.navigator import ROOT_DIR, move_file, undo_move, redo_mo
 from file_organizer.cmd.helper_def import *
 from file_organizer.application.file_organizer import FileOrganizerApp
 
-
+# some text
 def cmd_handler(cmd: str, organizer_app: FileOrganizerApp, rules: dict | None):
     """Handles chained command"""
     match cmd:
